@@ -1,0 +1,68 @@
+.main-container {
+    height: 100%;
+    overflow: scroll;
+    display: inline-block;
+    width: 60%;
+     padding: 20px;
+}
+
+.profile-card {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+    filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.2));
+    background-color: #fafafa;
+    /* background-color: #fafafab6; */
+    margin-bottom: 30px;
+     gap: 10px;
+     padding-top: 15px;;
+}
+
+
+
+.people-search-card {
+    margin-right: 25px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-radius: 30px;
+    filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.2));
+    margin-top: 20px;
+}
+
+/* .bio-and-edit-container  */
+
+.friends-container {
+
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 20px;
+}
+.friends-info{
+    gap: 10px;
+    display: flex;
+    align-items:flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.friends-font {
+    font-size: small;
+    text-align: right;
+}
+.friends-header {
+margin-top: 30px;
+margin-bottom: 10px;
+padding-bottom: 10px;
+border-bottom: 1px solid grey;
+}
+
+.people-search-card img {
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+

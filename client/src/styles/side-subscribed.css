@@ -1,0 +1,26 @@
+.side-subscribed-container {
+    margin: 20px;
+    display: inline-block;
+    width: 15%;
+    height: 100%;
+}
+
+
+.side-subscribed {
+    border-radius: 10px;
+    filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.2));
+    background-color: #fafafabb;
+    /* background-color: #fafafa; */
+    overflow: scroll;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    margin-top: 30px;
+    /* scroll-behavior: smooth; */
+    
+}
+
+.side-subscribed a {
+   text-decoration: none;
+   color: #3D3D3D;
+}
