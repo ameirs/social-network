@@ -27,9 +27,6 @@ export default function UserFeed() {
                         <img className="preview_img" src={post.preview_img} />
                     </div>
                     <div className="card-info">
-                        {/* <div className="avatar-post-container">
-                            <img className="avatar" src={post.img_url} />
-                        </div> */}
                         <div className="post-text">
                             <p>{post.post_text}</p>
                         </div>

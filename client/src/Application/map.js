@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMapGl, { Marker, Popup } from "react-map-gl";
-// import cities from "cities.json";
 import Geocode from "react-geocode";
 
 Geocode.setLanguage("en");

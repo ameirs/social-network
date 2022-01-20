@@ -1,0 +1,5 @@
+*
+!.gitignore
+secrets.json
+public/fonts
+node_modules

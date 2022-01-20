@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 export default function SideNav() {
     return (
         <div className="side-nav">
-            {/* <input></input> */}
             <Link to="/map">
                 <button>view map</button>
             </Link>
@@ -20,12 +19,6 @@ export default function SideNav() {
                         Find People
                     </div>
                 </Link>
-                {/* <Link to="/friends">
-                    <div className="menu-points">
-                        <img src="/assets/icons/search.png" alt="Find People" />
-                        Friends
-                    </div>
-                </Link> */}
                 <Link to="/feed">
                     <div className="menu-points">
                         <img src="/assets/icons/feed.png" alt="Feed" />

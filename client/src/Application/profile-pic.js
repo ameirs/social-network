@@ -1,5 +1,4 @@
 function ProfilePic(props) {
-    // console.log(props);
     let { first, last, imgUrl, avatarBig } = props;
     imgUrl = imgUrl || "./assets/profile-pic/default-avatar.png";
     return (

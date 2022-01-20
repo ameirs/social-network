@@ -15,7 +15,6 @@ export default class ModalProfilePic extends Component {
             },
             () => console.log("setFile state --> ", this.state)
         );
-        // setFile takes to arguments, 2nd one for a callback to check the state after the sunction has run
     }
 
     upload() {

@@ -23,7 +23,7 @@ class Login extends React.Component {
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.success) {
-                    location.replace("/"); /// ALSO INSERT LINK HERE!!!
+                    location.replace("/"); 
                 } else {
                     this.setState({
                         error: true,

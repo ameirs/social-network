@@ -4,15 +4,8 @@ import { socket } from "./socket";
 
 export default function Messenger() {
     const msgs = useSelector((state) => state?.msgs);
-
     const textareaRef = useRef();
     const chatContainerRef = useRef();
-
-    // useEffect(() => {
-    //     setTimeout(function () {
-    //         console.log("msgs", msgs);
-    //     }, 2000);
-    // }, []);
 
     useEffect(() => {
         chatContainerRef.current.scrollTop =
@@ -36,9 +29,6 @@ export default function Messenger() {
                                 <img className="avatar" src={msg.img_url} />
                             </div>
                         <div className="msgs">
-                            {/* <p>
-                                {msg.first} {msg.last}
-                            </p> */}
                             <p>{msg.message}</p>
                         </div>
                     </div>

@@ -11,11 +11,9 @@ class Registration extends React.Component {
         this.setState({
             [e.target.name]: e.target.value,
         });
-        // console.log(this.state);
     }
 
     submit() {
-        // console.log(this.state);
         fetch("/registration.json", {
             method: "POST",
             headers: {

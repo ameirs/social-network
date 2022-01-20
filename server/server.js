@@ -7,38 +7,9 @@ const cookieSession = require("cookie-session");
 const cryptoRandomString = require("crypto-random-string");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
-// const cities = require("cities.json");
-
-// ––––– cheerio –––––––
-// const request = require("request")
 const cheerio = require("cheerio");
 var axios = require("axios");
-
-//   axios.get("https://www.spiced-academy.com/de").then((res) => {
-//       // console.log(res.data)
-//       const $ = cheerio.load(res.data);
-
-//       const uid = uidSafe.sync(18);
-//       const link = "https://www.spiced-academy.com/de";
-
-//       console.log($("h1").html());
-
-//       const hostname = new URL(`${link}`);
-//       //   console.log(hostname.hostname);
-
-//       const previewData = {
-//           id: `${uid}`,
-//           url: `${link}`,
-//           domain: `${hostname.hostname}`,
-//           title: $('meta[property="og:site_name"]').attr("content"),
-//           img: $('meta[property="og:image"]').attr("content"),
-//           description: $('meta[name="description"]').attr("content"),
-//       };
-//       console.log(previewData);
-//   });
-
 const server = require("http").Server(app);
-
 const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
@@ -62,19 +33,8 @@ const cookieSessionMiddleware = cookieSession({
 });
 
 app.use(express.json());
-
 app.use(compression());
-
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
-
-// app.use(
-//     cookieSession({
-//         secret: COOKIE_SECRET,
-//         maxAge: 1000 * 60 * 60 * 24 * 14,
-//         sameSite: true,
-//     })
-// );
-
 app.use(cookieSessionMiddleware);
 io.use((socket, next) => {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
@@ -87,7 +47,6 @@ app.use((req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-    // Only logged in users should be able to connect
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
@@ -134,13 +93,11 @@ app.post("/registration.json", function (req, res) {
 });
 
 app.get("/user/id.json", function (req, res) {
-    // console.log("It went in /user/id.json");
     res.json({ userId: req.session.userId });
 });
 
 app.post("/login.json", (req, res) => {
     const { email, password } = req.body;
-
     db.getHashedPassword(email)
         .then((hashedPassword) => {
             return compare(password, hashedPassword.rows[0].password);
@@ -164,7 +121,6 @@ app.post("/login.json", (req, res) => {
             console.log("err in POST Login", err);
         });
 });
-
 app.post("/password/reset/start", function (req, res) {
     let { email } = req.body;
     db.confirmUser(email)
@@ -174,7 +130,6 @@ app.post("/password/reset/start", function (req, res) {
                     length: 6,
                 });
                 db.insertResetCode(randomString, email).then((data) => {
-                    console.log("reset code id", data);
                     sendEmail(
                         "mire.map@spicedling.email",
                         "Reset Password",
@@ -191,10 +146,8 @@ app.post("/password/reset/start", function (req, res) {
 
 app.post("/password/reset/verify", function (req, res) {
     let { code, newPassword, email } = req.body;
-
     db.verifyResetCode(code, email)
         .then((data) => {
-            console.log("data.rows[0].code", data.rows[0].code);
             if (data.rows[0].code === code) {
                 hash(newPassword)
                     .then((hashedPassword) => {
@@ -217,7 +170,6 @@ app.post("/password/reset/verify", function (req, res) {
 
 app.get("/user/:id.json", function (req, res) {
     let userId;
-
     if (req.params.id === "own") {
         userId = req.session.userId;
     } else {
@@ -254,8 +206,6 @@ app.get("/user/:id.json", function (req, res) {
 });
 
 app.get("/friends.json", function (req, res) {
-    console.log("req.session.userId -> ", req.session.userId);
-
     db.getFriendsAndWannabies(req.session.userId).then((data) => {
         res.json(data.rows);
     });
@@ -275,10 +225,8 @@ app.post("/upload", uploader.single("file"), s3.upload, function (req, res) {
 });
 
 app.get("/users.json", function (req, res) {
-    console.log("req.session.userId: ", req.session.userId);
     db.latestUsers(req.session.userId)
         .then((data) => {
-            // console.log("data.rows: ", data.rows);
             res.json(data.rows);
         })
         .catch((err) => {
@@ -289,7 +237,6 @@ app.get("/users.json", function (req, res) {
 app.get("/user-search/:letter.json", function (req, res) {
     db.searchUsers(req.params.letter, req.session.userId)
         .then((data) => {
-            // console.log("data.rows: ", data.rows);
             res.json(data.rows);
         })
         .catch((err) => {
@@ -300,7 +247,6 @@ app.get("/user-search/:letter.json", function (req, res) {
 app.get("/relation/:otherId.json", function (req, res) {
     db.getRelation(req.params.otherId, req.session.userId)
         .then((data) => {
-            console.log(data.rows);
             if (data.rows.length === 0) {
                 res.json({ relation: "Friend Request" });
             } else if (!data.rows[0].accepted) {
@@ -366,12 +312,6 @@ app.post("/relation/:otherId.json", function (req, res) {
 app.get("/alluser.json", function (req, res) {
     db.getAllUser()
         .then((data) => {
-            // console.log("data.rows: ", data.rows);
-            // const counts = {};
-            // data.rows.forEach((user) => {
-            //     counts[user.city] = (counts[user.city] || 0) + 1;
-            // });
-            // console.log("counts", counts);
             res.json(data.rows);
         })
         .catch((err) => {
@@ -380,19 +320,14 @@ app.get("/alluser.json", function (req, res) {
 });
 
 app.post("/add-post", function (req, res) {
-    console.log("req.body -> ", req.body);
-    console.log("userId -> ", req.session.userId);
-
     let { postText: post_text, link: preview_url } = req.body;
     let preview_title;
     let preview_img;
     let preview_desc;
-
     let hostname = new URL(preview_url);
     let domain;
 
     if (preview_url) {
-        // console.log("goes into if else");
         axios
             .get(preview_url)
             .then((res) => {
@@ -403,7 +338,6 @@ app.post("/add-post", function (req, res) {
                 );
                 preview_img = $('meta[property="og:image"]').attr("content");
                 preview_desc = $('meta[name="description"]').attr("content");
-                
             })
             .then(() => {
                 console.log(preview_title, preview_img, preview_desc);
@@ -418,7 +352,6 @@ app.post("/add-post", function (req, res) {
             });
     }
 });
-
 app.get("/posts/:id.json", function (req, res) {
     console.log("req.params.id -> ", req.params.id);
     let user_id;
@@ -431,15 +364,13 @@ app.get("/posts/:id.json", function (req, res) {
     }
     db.getPostsById(user_id)
         .then((data) => {
-            // console.log(data.rows);
             res.json(data.rows);
         })
         .catch((err) => {
             console.log("error in /posts/:id.json --> ", err);
         });
 });
-
-app.get("/allposts.json", function (req, res) {    
+app.get("/allposts.json", function (req, res) {
     db.getPostsAndUserData()
         .then((data) => {
             console.log(data.rows);
@@ -464,28 +395,17 @@ io.on("connection", (socket) => {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
-    // console.log(
-    //     `user with socket id ${socket.id} and id ${socket.request.session.userId} just connected`
-    // );
-
     db.getLastTenMessages()
         .then(({ rows }) => {
-            // console.log("rows in getLastMessages -> ", rows)
             socket.emit("chatMessages", rows);
         })
-        .catch((err) => {
-            // console.log("err in getLastMessages ->", err);
-        });
+        .catch((err) => {});
     socket.on("newMessage", (message) => {
-        // console.log("message -> ", message);
-        // console.log("userId -> ", socket.request.session.userId);
         db.insertMessages(socket.request.session.userId, message)
             .then(({ rows }) => {
-                // console.log("rows ->", rows[0].id)
                 return db.getNewMessage(rows[0].id);
             })
             .then((data) => {
-                // console.log("data.rows[0]", data.rows);
                 io.emit("newChatMessage", data.rows[0]);
             })
             .catch((err) => {

@@ -3,8 +3,6 @@ import { Registration } from "./registration";
 import { Login } from "./login";
 import { ResetPassword } from "./reset-password";
 
-// class Welcome extends React.Component
-
 function Auth() {
     return (
         <div className="auth-ui-container">
@@ -24,8 +22,6 @@ function Auth() {
         </div>
     );
 }
-
-// Welcome()
 
 export { Auth };
 

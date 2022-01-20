@@ -31,8 +31,6 @@ export default function Post() {
 
     return (
         <>
-
-            {/* {errorMessage && (<p>Please provide a Text and an Website link</p>)} */}
             <div className="post">
             <p>add new Post</p>
                 <input
