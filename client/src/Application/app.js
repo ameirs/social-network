@@ -32,7 +32,6 @@ class App extends React.Component {
             .then((response) => response.json())
             .then((data) => {
                 this.setState(data);
-                // console.log("this.state in app", this.state);
             });
     }
 
@@ -76,10 +75,6 @@ class App extends React.Component {
                         <Route path="/users">
                             <FindPeople />
                         </Route>
-
-                        {/* <Route path="/friends">
-                            <Friends />
-                        </Route> */}
 
                         <Route path="/map">
                             <Map />

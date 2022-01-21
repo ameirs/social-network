@@ -1,5 +1,8 @@
-*
-!.gitignore
-secrets.json
-public/fonts
 node_modules
+.DS_Store
+secrets.json
+.env
+client/public/bundle.js
+client/public/bundle.js.LICENSE.txt
+client/public/assets/fonts
+bundle.css
