@@ -1,3 +1,4 @@
 # social-network
-<img src="client/public/assets/preview.png">
 **_preview_**
+<img src="client/public/assets/preview.png">
+
